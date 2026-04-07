@@ -1,18 +1,16 @@
 import Link from 'next/link'
 import { Bookmark, Building2, FileText, Image as ImageIcon, Sparkles } from 'lucide-react'
-import { NavbarShell } from '@/components/shared/navbar-shell'
-import { Footer } from '@/components/shared/footer'
 import { getFactoryState } from '@/design/factory/get-factory-state'
 import { getProductKind } from '@/design/factory/get-product-kind'
 
 function getLoginConfig(kind: ReturnType<typeof getProductKind>) {
   if (kind === 'directory') {
     return {
-      shell: 'bg-[#f8fbff] text-slate-950',
+      shell: 'bg-[#f8fafc] text-slate-950',
       panel: 'border border-slate-200 bg-white',
       side: 'border border-slate-200 bg-slate-50',
       muted: 'text-slate-600',
-      action: 'bg-slate-950 text-white hover:bg-slate-800',
+      action: 'bg-cyan-600 text-white hover:bg-cyan-700',
       icon: Building2,
       title: 'Access your business dashboard',
       body: 'Manage listings, verification details, contact info, and local discovery surfaces from one place.',
@@ -32,11 +30,11 @@ function getLoginConfig(kind: ReturnType<typeof getProductKind>) {
   }
   if (kind === 'visual') {
     return {
-      shell: 'bg-[#07101f] text-white',
+      shell: 'bg-[#0f172a] text-white',
       panel: 'border border-white/10 bg-white/6',
       side: 'border border-white/10 bg-white/5',
       muted: 'text-slate-300',
-      action: 'bg-[#8df0c8] text-[#07111f] hover:bg-[#77dfb8]',
+      action: 'bg-cyan-400 text-slate-950 hover:bg-cyan-300',
       icon: ImageIcon,
       title: 'Enter the creator workspace',
       body: 'Open your visual feed, creator profile, and publishing tools without dropping into a generic admin shell.',
@@ -62,7 +60,6 @@ export default function LoginPage() {
 
   return (
     <div className={`min-h-screen ${config.shell}`}>
-      <NavbarShell />
       <main className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
         <section className="grid gap-8 lg:grid-cols-[0.88fr_1.12fr] lg:items-stretch">
           <div className={`rounded-[2rem] p-8 ${config.side}`}>
@@ -93,7 +90,6 @@ export default function LoginPage() {
           </div>
         </section>
       </main>
-      <Footer />
     </div>
   )
 }

@@ -3,12 +3,18 @@ import { Card, CardContent } from "@/components/ui/card";
 import { SITE_CONFIG } from "@/lib/site-config";
 
 const sections = [
-  { title: "Account Usage", body: "Keep your account secure and follow community guidelines." },
   {
-    title: "Content Ownership",
-    body: "You own the content you publish and grant the platform a license to display it.",
+    title: "Accounts",
+    body: "You are responsible for your login credentials and for activity under your account, including uploads and profile information.",
   },
-  { title: "Acceptable Use", body: "No spam, harassment, or illegal content." },
+  {
+    title: "Images and profile content",
+    body: "You retain rights to your images and text. You grant us a license to host, process, resize, and display that content to operate the gallery and profiles.",
+  },
+  {
+    title: "Acceptable use",
+    body: "Do not upload unlawful content, malware, or imagery that infringes others’ rights. Respect other creators and our community guidelines.",
+  },
 ];
 
 export default function TermsPage() {

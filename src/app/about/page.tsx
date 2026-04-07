@@ -8,22 +8,22 @@ import { mockTeamMembers } from "@/data/mock-data";
 import { SITE_CONFIG } from "@/lib/site-config";
 
 const highlights = [
-  { label: "Creators onboarded", value: "12k+" },
-  { label: "Bookmarks shared", value: "180k" },
-  { label: "Listings published", value: "8.6k" },
+  { label: "Images in the gallery", value: "120k+" },
+  { label: "Public profiles", value: "4.2k" },
+  { label: "Creator uploads (30d)", value: "18k" },
 ];
 
 const values = [
-  { title: "Curated by people", description: "We believe trusted recommendations beat endless feeds." },
-  { title: "Designed for focus", description: "Clear, calm UI helps you find the next best resource fast." },
-  { title: "Built to share", description: "Collections make collaboration and knowledge flow effortless." },
+  { title: "Images first", description: "The feed is built for photography and visual work—not generic cards or directory noise." },
+  { title: "Identity that matches", description: "Profiles give every creator a clear home: logo, bio, and a path back to their gallery." },
+  { title: "Share with intent", description: "Publish once; your work surfaces in image sharing and on your profile without extra tooling." },
 ];
 
 export default function AboutPage() {
   return (
     <PageShell
       title={`About ${SITE_CONFIG.name}`}
-      description={`${SITE_CONFIG.name} is a modern platform for creators, communities, and curated business discovery.`}
+      description={`${SITE_CONFIG.name} connects image sharing with public creator profiles—one place to publish visual work and introduce who you are.`}
       actions={
         <>
           <Button variant="outline" asChild>
@@ -40,11 +40,11 @@ export default function AboutPage() {
           <CardContent className="space-y-4 p-6">
             <Badge variant="secondary">Our Story</Badge>
             <h2 className="text-2xl font-semibold text-foreground">
-              A single home for knowledge, discovery, and community.
+              A gallery and a profile—together by design.
             </h2>
             <p className="text-sm text-muted-foreground">
-              {SITE_CONFIG.name} brings together publishing, listings, and social bookmarking so teams can move faster
-              and keep their best resources close.
+              {SITE_CONFIG.name} is built for people who lead with images: publish to the shared gallery, then point
+              audiences to a profile that explains your practice, links, and latest work.
             </p>
             <div className="grid gap-4 sm:grid-cols-3">
               {highlights.map((item) => (

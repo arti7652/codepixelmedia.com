@@ -1,7 +1,5 @@
 import Link from 'next/link'
 import { ArrowRight, Building2, FileText, Image as ImageIcon, LayoutGrid, Tag, User } from 'lucide-react'
-import { NavbarShell } from '@/components/shared/navbar-shell'
-import { Footer } from '@/components/shared/footer'
 import { TaskListClient } from '@/components/tasks/task-list-client'
 import { SchemaJsonLd } from '@/components/seo/schema-jsonld'
 import { fetchTaskPosts } from '@/lib/task-data'
@@ -24,18 +22,18 @@ const taskIcons: Record<TaskKey, any> = {
 }
 
 const variantShells = {
-  'listing-directory': 'bg-[radial-gradient(circle_at_top_left,rgba(56,189,248,0.08),transparent_24%),linear-gradient(180deg,#f8fbff_0%,#ffffff_100%)]',
-  'listing-showcase': 'bg-[linear-gradient(180deg,#ffffff_0%,#f4f9ff_100%)]',
-  'article-editorial': 'bg-[radial-gradient(circle_at_top_left,rgba(251,191,36,0.08),transparent_20%),linear-gradient(180deg,#fff8ef_0%,#ffffff_100%)]',
-  'article-journal': 'bg-[linear-gradient(180deg,#fffdf9_0%,#f7f1ea_100%)]',
-  'image-masonry': 'bg-[linear-gradient(180deg,#09101d_0%,#111c2f_100%)] text-white',
-  'image-portfolio': 'bg-[linear-gradient(180deg,#07111f_0%,#13203a_100%)] text-white',
-  'profile-creator': 'bg-[linear-gradient(180deg,#0a1120_0%,#101c34_100%)] text-white',
-  'profile-business': 'bg-[linear-gradient(180deg,#f6fbff_0%,#ffffff_100%)]',
+  'listing-directory': 'bg-[radial-gradient(circle_at_top_left,rgba(6,182,212,0.1),transparent_24%),linear-gradient(180deg,#f8fafc_0%,#ffffff_100%)]',
+  'listing-showcase': 'bg-[linear-gradient(180deg,#ffffff_0%,#f1f5f9_100%)]',
+  'article-editorial': 'bg-[radial-gradient(circle_at_top_left,rgba(34,211,238,0.1),transparent_20%),linear-gradient(180deg,oklch(0.99_0.01_260)_0%,#ffffff_100%)]',
+  'article-journal': 'bg-[linear-gradient(180deg,oklch(0.995_0.006_260)_0%,oklch(0.97_0.015_265)_100%)]',
+  'image-masonry': 'bg-[linear-gradient(180deg,#f8fafc_0%,#ffffff_100%)] text-slate-950',
+  'image-portfolio': 'bg-[linear-gradient(180deg,#f8fafc_0%,#ffffff_100%)] text-slate-950',
+  'profile-creator': 'bg-[linear-gradient(180deg,#0a0f1c_0%,#1e293b_100%)] text-white',
+  'profile-business': 'bg-[linear-gradient(180deg,#f8fafc_0%,#ffffff_100%)]',
   'classified-bulletin': 'bg-[linear-gradient(180deg,#edf3e4_0%,#ffffff_100%)]',
   'classified-market': 'bg-[linear-gradient(180deg,#f4f6ef_0%,#ffffff_100%)]',
-  'sbm-curation': 'bg-[linear-gradient(180deg,#fff7ee_0%,#ffffff_100%)]',
-  'sbm-library': 'bg-[linear-gradient(180deg,#f7f8fc_0%,#ffffff_100%)]',
+  'sbm-curation': 'bg-[linear-gradient(180deg,oklch(0.99_0.012_260)_0%,#ffffff_100%)]',
+  'sbm-library': 'bg-[linear-gradient(180deg,#f7f9fc_0%,#ffffff_100%)]',
 } as const
 
 export async function TaskListPage({ task, category }: { task: TaskKey; category?: string }) {
@@ -55,7 +53,7 @@ export async function TaskListPage({ task, category }: { task: TaskKey; category
   const shellClass = variantShells[layoutKey as keyof typeof variantShells] || 'bg-background'
   const Icon = taskIcons[task] || LayoutGrid
 
-  const isDark = ['image-masonry', 'image-portfolio', 'profile-creator'].includes(layoutKey)
+  const isDark = ['profile-creator'].includes(layoutKey)
   const ui = isDark
     ? {
         muted: 'text-slate-300',
@@ -66,11 +64,11 @@ export async function TaskListPage({ task, category }: { task: TaskKey; category
       }
     : layoutKey.startsWith('article') || layoutKey.startsWith('sbm')
       ? {
-          muted: 'text-[#72594a]',
-          panel: 'border border-[#dbc6b6] bg-white/90',
-          soft: 'border border-[#dbc6b6] bg-[#fff8ef]',
-          input: 'border border-[#dbc6b6] bg-white text-[#2f1d16]',
-          button: 'bg-[#2f1d16] text-[#fff4e4] hover:bg-[#452920]',
+          muted: 'text-muted-foreground',
+          panel: 'border border-border bg-card/90',
+          soft: 'border border-border bg-secondary',
+          input: 'border border-border bg-background text-foreground',
+          button: 'bg-primary text-primary-foreground hover:bg-primary/90',
         }
       : {
           muted: 'text-slate-600',
@@ -82,7 +80,6 @@ export async function TaskListPage({ task, category }: { task: TaskKey; category
 
   return (
     <div className={`min-h-screen ${shellClass}`}>
-      <NavbarShell />
       <main className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
         {task === 'listing' ? (
           <SchemaJsonLd
@@ -170,7 +167,7 @@ export async function TaskListPage({ task, category }: { task: TaskKey; category
               <div className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.22em] ${ui.soft}`}>
                 <Icon className="h-3.5 w-3.5" /> Visual feed
               </div>
-              <h1 className="mt-5 text-5xl font-semibold tracking-[-0.05em]">{taskConfig?.description || 'Latest posts'}</h1>
+              <h1 className="mt-5 text-5xl font-semibold tracking-[-0.05em] text-foreground">{taskConfig?.description || 'Latest posts'}</h1>
               <p className={`mt-5 max-w-2xl text-sm leading-8 ${ui.muted}`}>This surface leans into stronger imagery, larger modules, and more expressive spacing so visual content feels materially different from reading and directory pages.</p>
             </div>
             <div className="grid grid-cols-2 gap-4">
@@ -248,7 +245,6 @@ export async function TaskListPage({ task, category }: { task: TaskKey; category
 
         <TaskListClient task={task} initialPosts={posts} category={normalizedCategory} />
       </main>
-      <Footer />
     </div>
   )
 }

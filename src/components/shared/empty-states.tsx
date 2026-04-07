@@ -14,6 +14,12 @@ import {
 } from 'lucide-react'
 import { Button } from '@/components/ui/button'
 import Link from 'next/link'
+import { SITE_CONFIG } from '@/lib/site-config'
+
+const galleryBrowseHref =
+  SITE_CONFIG.tasks.find((t) => t.key === 'image' && t.enabled)?.route ?? '/image-sharing'
+const profileBrowseHref =
+  SITE_CONFIG.tasks.find((t) => t.key === 'profile' && t.enabled)?.route ?? '/profile'
 
 interface EmptyStateProps {
   icon?: React.ElementType
@@ -89,7 +95,8 @@ export function NoSearchResults() {
     <EmptyState
       icon={Search}
       title="No results found"
-      description="Your search didn't match any content. Try using different keywords or checking your spelling."
+      description="Your search didn’t match any galleries or profiles. Try different keywords, or browse the gallery and creator directory."
+      action={{ label: 'Browse gallery', href: galleryBrowseHref }}
     />
   )
 }
@@ -110,8 +117,8 @@ export function NoSavedItems() {
     <EmptyState
       icon={Bookmark}
       title="No saved items"
-      description="Items you bookmark will appear here. Start exploring and save content you want to revisit."
-      action={{ label: 'Explore Content', href: '/' }}
+      description="Posts and profiles you save will show up here. Explore the gallery and follow creators you care about."
+      action={{ label: 'Open gallery', href: galleryBrowseHref }}
     />
   )
 }
@@ -131,8 +138,8 @@ export function NoFollowers() {
     <EmptyState
       icon={Users}
       title="No followers yet"
-      description="Share your profile and create engaging content to build your following."
-      action={{ label: 'Share Profile', onClick: () => {} }}
+      description="Share your profile and publish visual work so people can follow you and see your latest uploads."
+      action={{ label: 'View profiles', href: profileBrowseHref }}
     />
   )
 }

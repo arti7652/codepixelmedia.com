@@ -3,7 +3,7 @@
 import * as React from 'react'
 import { Slot } from '@radix-ui/react-slot'
 import { cva, VariantProps } from 'class-variance-authority'
-import { PanelLeftIcon } from 'lucide-react'
+import { PanelLeftIcon, PanelRightIcon } from 'lucide-react'
 
 import { useIsMobile } from '@/hooks/use-mobile'
 import { cn } from '@/lib/utils'
@@ -44,6 +44,12 @@ type SidebarContextProps = {
 
 const SidebarContext = React.createContext<SidebarContextProps | null>(null)
 
+const SidebarSideContext = React.createContext<'left' | 'right'>('left')
+
+function useSidebarSide() {
+  return React.useContext(SidebarSideContext)
+}
+
 function useSidebar() {
   const context = React.useContext(SidebarContext)
   if (!context) {
@@ -82,8 +88,10 @@ function SidebarProvider({
         _setOpen(openState)
       }
 
-      // This sets the cookie to keep the sidebar state.
-      document.cookie = `${SIDEBAR_COOKIE_NAME}=${openState}; path=/; max-age=${SIDEBAR_COOKIE_MAX_AGE}`
+      // Persist only for uncontrolled usage; controlled callers (e.g. localStorage) own persistence.
+      if (!setOpenProp) {
+        document.cookie = `${SIDEBAR_COOKIE_NAME}=${openState}; path=/; max-age=${SIDEBAR_COOKIE_MAX_AGE}`
+      }
     },
     [setOpenProp, open],
   )
@@ -139,7 +147,7 @@ function SidebarProvider({
             } as React.CSSProperties
           }
           className={cn(
-            'group/sidebar-wrapper has-data-[variant=inset]:bg-sidebar flex min-h-svh w-full',
+            'group/sidebar-wrapper has-data-[variant=inset]:bg-sidebar flex min-h-svh w-full min-w-0 overflow-x-hidden',
             className,
           )}
           {...props}
@@ -167,47 +175,52 @@ function Sidebar({
 
   if (collapsible === 'none') {
     return (
-      <div
-        data-slot="sidebar"
-        className={cn(
-          'bg-sidebar text-sidebar-foreground flex h-full w-(--sidebar-width) flex-col',
-          className,
-        )}
-        {...props}
-      >
-        {children}
-      </div>
+      <SidebarSideContext.Provider value={side}>
+        <div
+          data-slot="sidebar"
+          className={cn(
+            'bg-sidebar text-sidebar-foreground flex h-full w-(--sidebar-width) flex-col',
+            className,
+          )}
+          {...props}
+        >
+          {children}
+        </div>
+      </SidebarSideContext.Provider>
     )
   }
 
   if (isMobile) {
     return (
-      <Sheet open={openMobile} onOpenChange={setOpenMobile} {...props}>
-        <SheetContent
-          data-sidebar="sidebar"
-          data-slot="sidebar"
-          data-mobile="true"
-          className="bg-sidebar text-sidebar-foreground w-(--sidebar-width) p-0 [&>button]:hidden"
-          style={
-            {
-              '--sidebar-width': SIDEBAR_WIDTH_MOBILE,
-            } as React.CSSProperties
-          }
-          side={side}
-        >
-          <SheetHeader className="sr-only">
-            <SheetTitle>Sidebar</SheetTitle>
-            <SheetDescription>Displays the mobile sidebar.</SheetDescription>
-          </SheetHeader>
-          <div className="flex h-full w-full flex-col">{children}</div>
-        </SheetContent>
-      </Sheet>
+      <SidebarSideContext.Provider value={side}>
+        <Sheet open={openMobile} onOpenChange={setOpenMobile} {...props}>
+          <SheetContent
+            data-sidebar="sidebar"
+            data-slot="sidebar"
+            data-mobile="true"
+            className="bg-sidebar text-sidebar-foreground w-(--sidebar-width) p-0 [&>button]:hidden"
+            style={
+              {
+                '--sidebar-width': SIDEBAR_WIDTH_MOBILE,
+              } as React.CSSProperties
+            }
+            side={side}
+          >
+            <SheetHeader className="sr-only">
+              <SheetTitle>Sidebar</SheetTitle>
+              <SheetDescription>Displays the mobile sidebar.</SheetDescription>
+            </SheetHeader>
+            <div className="flex h-full w-full flex-col">{children}</div>
+          </SheetContent>
+        </Sheet>
+      </SidebarSideContext.Provider>
     )
   }
 
   return (
+    <SidebarSideContext.Provider value={side}>
     <div
-      className="group peer text-sidebar-foreground hidden md:block"
+      className="group peer shrink-0 text-sidebar-foreground hidden md:block"
       data-state={state}
       data-collapsible={state === 'collapsed' ? collapsible : ''}
       data-variant={variant}
@@ -250,6 +263,7 @@ function Sidebar({
         </div>
       </div>
     </div>
+    </SidebarSideContext.Provider>
   )
 }
 
@@ -259,6 +273,8 @@ function SidebarTrigger({
   ...props
 }: React.ComponentProps<typeof Button>) {
   const { toggleSidebar } = useSidebar()
+  const chromeSide = useSidebarSide()
+  const PanelIcon = chromeSide === 'right' ? PanelRightIcon : PanelLeftIcon
 
   return (
     <Button
@@ -273,7 +289,7 @@ function SidebarTrigger({
       }}
       {...props}
     >
-      <PanelLeftIcon />
+      <PanelIcon />
       <span className="sr-only">Toggle Sidebar</span>
     </Button>
   )
@@ -309,7 +325,7 @@ function SidebarInset({ className, ...props }: React.ComponentProps<'main'>) {
     <main
       data-slot="sidebar-inset"
       className={cn(
-        'bg-background relative flex w-full flex-1 flex-col',
+        'bg-background relative flex min-w-0 flex-1 flex-col',
         'md:peer-data-[variant=inset]:m-2 md:peer-data-[variant=inset]:ml-0 md:peer-data-[variant=inset]:rounded-xl md:peer-data-[variant=inset]:shadow-sm md:peer-data-[variant=inset]:peer-data-[state=collapsed]:ml-2',
         className,
       )}
@@ -510,6 +526,8 @@ function SidebarMenuButton({
 } & VariantProps<typeof sidebarMenuButtonVariants>) {
   const Comp = asChild ? Slot : 'button'
   const { isMobile, state } = useSidebar()
+  const chromeSide = useSidebarSide()
+  const tooltipSide = chromeSide === 'right' ? 'left' : 'right'
 
   const button = (
     <Comp
@@ -536,7 +554,7 @@ function SidebarMenuButton({
     <Tooltip>
       <TooltipTrigger asChild>{button}</TooltipTrigger>
       <TooltipContent
-        side="right"
+        side={tooltipSide}
         align="center"
         hidden={state !== 'collapsed' || isMobile}
         {...tooltip}

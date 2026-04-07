@@ -1,6 +1,4 @@
 import { Building2, FileText, Image as ImageIcon, Mail, MapPin, Phone, Sparkles, Bookmark } from 'lucide-react'
-import { NavbarShell } from '@/components/shared/navbar-shell'
-import { Footer } from '@/components/shared/footer'
 import { SITE_CONFIG } from '@/lib/site-config'
 import { getFactoryState } from '@/design/factory/get-factory-state'
 import { getProductKind } from '@/design/factory/get-product-kind'
@@ -8,37 +6,37 @@ import { getProductKind } from '@/design/factory/get-product-kind'
 function getTone(kind: ReturnType<typeof getProductKind>) {
   if (kind === 'directory') {
     return {
-      shell: 'bg-[#f8fbff] text-slate-950',
-      panel: 'border border-slate-200 bg-white',
-      soft: 'border border-slate-200 bg-slate-50',
-      muted: 'text-slate-600',
-      action: 'bg-slate-950 text-white hover:bg-slate-800',
+      shell: 'bg-white text-foreground',
+      panel: 'border border-border bg-card',
+      soft: 'border border-border bg-muted/50',
+      muted: 'text-muted-foreground',
+      action: 'bg-primary text-primary-foreground hover:bg-primary/90',
     }
   }
   if (kind === 'editorial') {
     return {
-      shell: 'bg-[#fbf6ee] text-[#241711]',
-      panel: 'border border-[#dcc8b7] bg-[#fffdfa]',
-      soft: 'border border-[#e6d6c8] bg-[#fff4e8]',
-      muted: 'text-[#6e5547]',
-      action: 'bg-[#241711] text-[#fff1e2] hover:bg-[#3a241b]',
+      shell: 'bg-white text-foreground',
+      panel: 'border border-border bg-card',
+      soft: 'border border-border bg-muted/50',
+      muted: 'text-muted-foreground',
+      action: 'bg-primary text-primary-foreground hover:bg-primary/90',
     }
   }
   if (kind === 'visual') {
     return {
-      shell: 'bg-[#07101f] text-white',
-      panel: 'border border-white/10 bg-white/6',
-      soft: 'border border-white/10 bg-white/5',
-      muted: 'text-slate-300',
-      action: 'bg-[#8df0c8] text-[#07111f] hover:bg-[#77dfb8]',
+      shell: 'bg-white text-foreground',
+      panel: 'border border-border bg-card',
+      soft: 'border border-border bg-muted/50',
+      muted: 'text-muted-foreground',
+      action: 'bg-primary text-primary-foreground hover:bg-primary/90',
     }
   }
   return {
-    shell: 'bg-[#f7f1ea] text-[#261811]',
-    panel: 'border border-[#ddcdbd] bg-[#fffaf4]',
-    soft: 'border border-[#e8dbce] bg-[#f3e8db]',
-    muted: 'text-[#71574a]',
-    action: 'bg-[#5b2b3b] text-[#fff0f5] hover:bg-[#74364b]',
+    shell: 'bg-white text-foreground',
+    panel: 'border border-border bg-card',
+    soft: 'border border-border bg-muted/50',
+    muted: 'text-muted-foreground',
+    action: 'bg-primary text-primary-foreground hover:bg-primary/90',
   }
 }
 
@@ -73,7 +71,6 @@ export default function ContactPage() {
 
   return (
     <div className={`min-h-screen ${tone.shell}`}>
-      <NavbarShell />
       <main className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
         <section className="grid gap-8 lg:grid-cols-[0.95fr_1.05fr] lg:items-start">
           <div>
@@ -94,16 +91,15 @@ export default function ContactPage() {
           <div className={`rounded-[2rem] p-7 ${tone.panel}`}>
             <h2 className="text-2xl font-semibold">Send a message</h2>
             <form className="mt-6 grid gap-4">
-              <input className="h-12 rounded-xl border border-current/10 bg-transparent px-4 text-sm" placeholder="Your name" />
-              <input className="h-12 rounded-xl border border-current/10 bg-transparent px-4 text-sm" placeholder="Email address" />
-              <input className="h-12 rounded-xl border border-current/10 bg-transparent px-4 text-sm" placeholder="What do you need help with?" />
-              <textarea className="min-h-[180px] rounded-2xl border border-current/10 bg-transparent px-4 py-3 text-sm" placeholder="Share the full context so we can respond with the right next step." />
+              <input className="h-12 rounded-xl border border-border bg-background px-4 text-sm text-foreground" placeholder="Your name" />
+              <input className="h-12 rounded-xl border border-border bg-background px-4 text-sm text-foreground" placeholder="Email address" />
+              <input className="h-12 rounded-xl border border-border bg-background px-4 text-sm text-foreground" placeholder="What do you need help with?" />
+              <textarea className="min-h-[180px] rounded-2xl border border-border bg-background px-4 py-3 text-sm text-foreground" placeholder="Share the full context so we can respond with the right next step." />
               <button type="submit" className={`inline-flex h-12 items-center justify-center rounded-full px-6 text-sm font-semibold ${tone.action}`}>Send message</button>
             </form>
           </div>
         </section>
       </main>
-      <Footer />
     </div>
   )
 }

@@ -2,8 +2,6 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 import { ArrowRight, Bookmark, Building2, Compass, FileText, Globe2, Image as ImageIcon, LayoutGrid, MapPin, ShieldCheck, Tag, User } from 'lucide-react'
 import { ContentImage } from '@/components/shared/content-image'
-import { NavbarShell } from '@/components/shared/navbar-shell'
-import { Footer } from '@/components/shared/footer'
 import { SchemaJsonLd } from '@/components/seo/schema-jsonld'
 import { TaskPostCard } from '@/components/shared/task-post-card'
 import { SITE_CONFIG, type TaskKey } from '@/lib/site-config'
@@ -86,15 +84,15 @@ function getDirectoryTone(brandPack: string) {
     }
   }
   return {
-    shell: 'bg-[#f8fbff] text-slate-950',
+    shell: 'bg-[#f8fafc] text-slate-950',
     hero: 'bg-[linear-gradient(180deg,#eef6ff_0%,#ffffff_100%)]',
     panel: 'border border-slate-200 bg-white shadow-[0_24px_64px_rgba(15,23,42,0.08)]',
     soft: 'border border-slate-200 bg-slate-50',
     muted: 'text-slate-600',
     title: 'text-slate-950',
-    badge: 'bg-slate-950 text-white',
-    action: 'bg-slate-950 text-white hover:bg-slate-800',
-    actionAlt: 'border border-slate-200 bg-white text-slate-950 hover:bg-slate-100',
+    badge: 'bg-cyan-600 text-white',
+    action: 'bg-cyan-600 text-white hover:bg-cyan-700',
+    actionAlt: 'border border-slate-200 bg-white text-slate-950 hover:bg-slate-50',
   }
 }
 
@@ -113,14 +111,14 @@ function getEditorialTone() {
 
 function getVisualTone() {
   return {
-    shell: 'bg-[#07101f] text-white',
-    panel: 'border border-white/10 bg-[rgba(11,18,31,0.78)] shadow-[0_28px_80px_rgba(0,0,0,0.35)]',
-    soft: 'border border-white/10 bg-white/6',
-    muted: 'text-slate-300',
-    title: 'text-white',
-    badge: 'bg-[#8df0c8] text-[#07111f]',
-    action: 'bg-[#8df0c8] text-[#07111f] hover:bg-[#77dfb8]',
-    actionAlt: 'border border-white/10 bg-white/6 text-white hover:bg-white/10',
+    shell: 'bg-white text-slate-950',
+    panel: 'border border-slate-200 bg-white shadow-[0_24px_64px_rgba(15,23,42,0.08)]',
+    soft: 'border border-slate-200 bg-slate-50',
+    muted: 'text-slate-600',
+    title: 'text-slate-950',
+    badge: 'bg-cyan-600 text-white',
+    action: 'bg-cyan-600 text-white hover:bg-cyan-700',
+    actionAlt: 'border border-slate-200 bg-white text-slate-950 hover:bg-slate-50',
   }
 }
 
@@ -516,8 +514,13 @@ export default async function HomePage() {
   ]
 
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      <NavbarShell />
+    <div
+      className={
+        productKind === 'visual'
+          ? 'min-h-screen bg-white text-foreground'
+          : 'min-h-screen bg-background text-foreground'
+      }
+    >
       <SchemaJsonLd data={schemaData} />
       {productKind === 'directory' ? (
         <DirectoryHome
@@ -538,7 +541,6 @@ export default async function HomePage() {
       {productKind === 'curation' ? (
         <CurationHome primaryTask={primaryTask} bookmarkPosts={bookmarkPosts} profilePosts={profilePosts} articlePosts={articlePosts} />
       ) : null}
-      <Footer />
     </div>
   )
 }

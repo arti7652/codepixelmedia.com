@@ -1,8 +1,6 @@
 ﻿'use client'
 
 import type { ReactNode } from 'react'
-import { NavbarShell } from '@/components/shared/navbar-shell'
-import { Footer } from '@/components/shared/footer'
 
 export function PageShell({
   title,
@@ -17,7 +15,6 @@ export function PageShell({
 }) {
   return (
     <div className="min-h-screen bg-background">
-      <NavbarShell />
       <main>
         <section className="border-b border-border bg-secondary/30">
           <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
@@ -36,7 +33,6 @@ export function PageShell({
           {children}
         </section>
       </main>
-      <Footer />
     </div>
   )
 }

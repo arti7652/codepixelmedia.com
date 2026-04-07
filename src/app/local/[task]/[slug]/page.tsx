@@ -4,8 +4,6 @@ import Link from "next/link";
 import { useMemo } from "react";
 import { useParams } from "next/navigation";
 import { MapPin, Globe, Phone, Tag, Mail } from "lucide-react";
-import { NavbarShell } from "@/components/shared/navbar-shell";
-import { Footer } from "@/components/shared/footer";
 import { TaskImageCarousel } from "@/components/tasks/task-image-carousel";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -110,7 +108,6 @@ export default function LocalPostDetailPage() {
   if (!post || !taskConfig) {
     return (
       <div className="min-h-screen bg-background">
-        <NavbarShell />
         <main className="mx-auto max-w-3xl px-4 py-20 text-center">
           <h1 className="text-2xl font-semibold text-foreground">Post not found</h1>
           <p className="mt-2 text-muted-foreground">
@@ -120,7 +117,6 @@ export default function LocalPostDetailPage() {
             <Link href="/">Back home</Link>
           </Button>
         </main>
-        <Footer />
       </div>
     );
   }
@@ -136,7 +132,6 @@ export default function LocalPostDetailPage() {
 
   return (
     <div className="min-h-screen bg-background">
-      <NavbarShell />
       <main className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
         <Link
           href={taskConfig.route}
@@ -268,7 +263,6 @@ export default function LocalPostDetailPage() {
           </div>
         )}
       </main>
-      <Footer />
     </div>
   );
 }

@@ -214,7 +214,7 @@ export function ListingCard({ listing }: { listing: Listing }) {
 export function ClassifiedAdCard({ ad }: { ad: ClassifiedAd }) {
   const conditionColors = {
     'new': 'bg-green-500/10 text-green-500',
-    'like-new': 'bg-blue-500/10 text-blue-500',
+    'like-new': 'bg-cyan-500/10 text-cyan-600',
     'good': 'bg-yellow-500/10 text-yellow-500',
     'fair': 'bg-orange-500/10 text-orange-500',
     'poor': 'bg-red-500/10 text-red-500',

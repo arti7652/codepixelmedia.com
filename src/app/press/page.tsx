@@ -24,14 +24,14 @@ export default function PressPage() {
   return (
     <PageShell
       title="Press"
-      description="Media resources, brand assets, and press coverage."
+      description="Logos, gallery screenshots, and coverage of our image sharing and profiles platform."
     >
       <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr]">
         <Card className="border-border bg-card">
           <CardContent className="p-6 space-y-3">
             <h2 className="text-lg font-semibold text-foreground">Press Kit</h2>
             <p className="text-sm text-muted-foreground">
-              Download logos, product screenshots, and brand guidelines for media use.
+              Download logos, UI captures of the gallery and profiles, and brand guidelines for editorial use.
             </p>
             <div className="grid gap-2">
               {mockPressAssets.map((asset) => (

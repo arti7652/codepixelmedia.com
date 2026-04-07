@@ -6,23 +6,23 @@ import { Badge } from "@/components/ui/badge";
 import { SITE_CONFIG } from "@/lib/site-config";
 
 const roles = [
-  { title: "Product Designer", location: "Remote", type: "Full-time", level: "Mid" },
-  { title: "Frontend Engineer", location: "New York, NY", type: "Full-time", level: "Senior" },
-  { title: "Community Lead", location: "Remote", type: "Part-time", level: "Mid" },
+  { title: "Visual Product Designer", location: "Remote", type: "Full-time", level: "Mid" },
+  { title: "Media & Frontend Engineer", location: "New York, NY", type: "Full-time", level: "Senior" },
+  { title: "Creator Partnerships Lead", location: "Remote", type: "Part-time", level: "Mid" },
 ];
 
 const benefits = [
-  "Flexible schedules and remote-first culture",
+  "Remote-first team with flexible hours",
   "Health, dental, and vision coverage",
-  "Annual learning stipend",
-  "Quarterly offsites and team retreats",
+  "Stipend for courses, conferences, and creative tools",
+  "Quarterly creative meetups focused on photographers and visual artists",
 ];
 
 export default function CareersPage() {
   return (
     <PageShell
       title="Careers"
-      description={`Help us build the future of community-driven publishing at ${SITE_CONFIG.name}.`}
+      description={`Help us grow ${SITE_CONFIG.name}'s image gallery and creator profiles—thoughtful media delivery and identity on the web.`}
       actions={
         <Button asChild>
           <Link href="/contact">Apply Now</Link>
@@ -51,7 +51,8 @@ export default function CareersPage() {
           <CardContent className="p-6">
             <h3 className="text-lg font-semibold text-foreground">Why {SITE_CONFIG.name}</h3>
             <p className="mt-2 text-sm text-muted-foreground">
-              We are building a product that helps people discover and share the best knowledge on the web.
+              We build tools for people who lead with images—fast uploads, beautiful presentation, and profiles that
+              feel like a real introduction.
             </p>
             <div className="mt-4 space-y-2 text-sm text-muted-foreground">
               {benefits.map((benefit) => (

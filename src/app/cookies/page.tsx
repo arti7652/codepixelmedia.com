@@ -2,9 +2,9 @@
 import { Card, CardContent } from '@/components/ui/card'
 
 const sections = [
-  { title: 'Essential Cookies', body: 'Required for authentication and core features.' },
-  { title: 'Analytics Cookies', body: 'Help us understand how the platform is used.' },
-  { title: 'Preference Cookies', body: 'Remember your settings and saved filters.' },
+  { title: 'Essential cookies', body: 'Required for sign-in, sessions, and security when you use the gallery and profiles.' },
+  { title: 'Analytics cookies', body: 'Help us understand which surfaces are used and how the media experience performs.' },
+  { title: 'Preference cookies', body: 'Remember UI choices such as theme, filters, and sidebar state where applicable.' },
 ]
 
 export default function CookiesPage() {

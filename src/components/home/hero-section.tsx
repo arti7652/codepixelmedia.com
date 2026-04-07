@@ -13,15 +13,15 @@ const FALLBACK_IMAGE = "/placeholder.svg?height=1400&width=2400";
 
 const heroClasses = {
   'search-first': {
-    section: 'border-b border-slate-200 bg-[linear-gradient(180deg,#edf5ff_0%,#f8fbff_42%,#ffffff_100%)] text-slate-950',
-    overlay: 'bg-[radial-gradient(circle_at_top_left,rgba(56,189,248,0.18),transparent_26%),radial-gradient(circle_at_top_right,rgba(15,23,42,0.12),transparent_26%)]',
+    section: 'border-b border-slate-200 bg-[linear-gradient(180deg,#edf5ff_0%,#f8fafc_42%,#ffffff_100%)] text-slate-950',
+    overlay: 'bg-[radial-gradient(circle_at_top_left,rgba(6,182,212,0.16),transparent_26%),radial-gradient(circle_at_top_right,rgba(71,85,105,0.1),transparent_26%)]',
     grid: 'lg:grid-cols-[1.08fr_0.92fr]',
     card: 'border border-white/70 bg-white/80 shadow-[0_28px_90px_rgba(15,23,42,0.12)]',
     title: 'text-slate-950',
     body: 'text-slate-600',
-    badge: 'bg-slate-950 text-white',
-    primary: 'bg-slate-950 text-white hover:bg-slate-800',
-    secondary: 'border border-slate-200 bg-white text-slate-900 hover:bg-slate-100',
+    badge: 'bg-cyan-600 text-white',
+    primary: 'bg-cyan-600 text-white hover:bg-cyan-700',
+    secondary: 'border border-slate-200 bg-white text-slate-900 hover:bg-slate-50',
   },
   'spotlight-split': {
     section: 'border-b border-[rgba(123,72,35,0.14)] bg-[linear-gradient(180deg,#1f1613_0%,#2d1d17_50%,#fff7ed_100%)] text-white',
@@ -35,14 +35,14 @@ const heroClasses = {
     secondary: 'border border-white/18 bg-white/10 text-white hover:bg-white/16',
   },
   'gallery-mosaic': {
-    section: 'border-b border-slate-800 bg-[linear-gradient(180deg,#07111f_0%,#0c172b_45%,#101c31_100%)] text-white',
-    overlay: 'bg-[radial-gradient(circle_at_top_left,rgba(110,231,183,0.16),transparent_24%),radial-gradient(circle_at_bottom_right,rgba(99,102,241,0.16),transparent_26%)]',
+    section: 'border-b border-slate-800 bg-[linear-gradient(180deg,#0f172a_0%,#1e293b_45%,#0c4a6e_100%)] text-white',
+    overlay: 'bg-[radial-gradient(circle_at_top_left,rgba(34,211,238,0.18),transparent_24%),radial-gradient(circle_at_bottom_right,rgba(6,182,212,0.14),transparent_26%)]',
     grid: 'lg:grid-cols-[0.95fr_1.05fr]',
     card: 'border border-white/10 bg-slate-900/65 shadow-[0_30px_110px_rgba(15,23,42,0.45)] backdrop-blur-xl',
     title: 'text-white',
     body: 'text-slate-300',
-    badge: 'bg-[#8df0c8] text-[#07111f]',
-    primary: 'bg-[#8df0c8] text-[#07111f] hover:bg-[#77dfb8]',
+    badge: 'bg-cyan-400 text-slate-950',
+    primary: 'bg-cyan-400 text-slate-950 hover:bg-cyan-300',
     secondary: 'border border-white/18 bg-white/6 text-white hover:bg-white/12',
   },
   'catalog-promo': {

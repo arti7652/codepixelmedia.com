@@ -6,16 +6,16 @@ import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/
 import { mockFaqs } from '@/data/mock-data'
 
 const topics = [
-  { title: 'Getting Started', description: 'Create your account and publish your first post.' },
-  { title: 'Bookmarks & Collections', description: 'Save links, organize folders, and share collections.' },
-  { title: 'Listings & Ads', description: 'Manage your business listings and classifieds.' },
+  { title: 'Image sharing', description: 'Upload images, add titles and descriptions, and publish to the public gallery.' },
+  { title: 'Profiles', description: 'Set up your logo, bio, and links so visitors understand your work at a glance.' },
+  { title: 'Account & settings', description: 'Sign-in, email preferences, and profile visibility from one place.' },
 ]
 
 export default function HelpPage() {
   return (
     <PageShell
       title="Help Center"
-      description="Find answers, guides, and best practices."
+      description="Help for the gallery, creator profiles, uploads, and your account."
       actions={
         <Button asChild>
           <Link href="/contact">Contact Support</Link>

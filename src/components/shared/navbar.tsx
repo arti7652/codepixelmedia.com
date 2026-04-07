@@ -50,10 +50,10 @@ const variantClasses = {
   'floating-bar': {
     shell: 'border-b border-transparent bg-transparent text-white',
     logo: 'rounded-[1.35rem] border border-white/12 bg-white/8 shadow-[0_16px_48px_rgba(15,23,42,0.22)] backdrop-blur',
-    active: 'bg-[#8df0c8] text-[#07111f]',
+    active: 'bg-cyan-400 text-slate-950',
     idle: 'text-slate-200 hover:bg-white/10 hover:text-white',
-    cta: 'rounded-full bg-[#8df0c8] text-[#07111f] hover:bg-[#77dfb8]',
-    mobile: 'border-t border-white/10 bg-[#09101d]/96',
+    cta: 'rounded-full bg-cyan-400 text-slate-950 hover:bg-cyan-300',
+    mobile: 'border-t border-white/10 bg-[#0f172a]/96',
   },
   'utility-bar': {
     shell: 'border-b border-[#d7deca] bg-[#f4f6ef]/94 text-[#1f2617] backdrop-blur-xl',

@@ -2,9 +2,18 @@
 import { Card, CardContent } from '@/components/ui/card'
 
 const sections = [
-  { title: 'Data We Collect', body: 'Account information, usage analytics, and content you submit.' },
-  { title: 'How We Use Data', body: 'To personalize your experience, improve search, and keep the platform secure.' },
-  { title: 'Your Choices', body: 'You can manage email preferences and delete your account at any time.' },
+  {
+    title: 'Data we collect',
+    body: 'Account details (email, name), usage analytics, images and text you publish, and profile fields such as bio, logo, and website links.',
+  },
+  {
+    title: 'How we use data',
+    body: 'To display your gallery and profile to visitors, optimize image delivery, improve search and recommendations, and keep accounts secure.',
+  },
+  {
+    title: 'Your choices',
+    body: 'You can update or remove published images where your plan allows, edit profile information, manage email preferences, and request account deletion.',
+  },
 ]
 
 export default function PrivacyPage() {

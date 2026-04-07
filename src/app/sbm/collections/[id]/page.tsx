@@ -5,8 +5,6 @@ import { useParams } from 'next/navigation'
 import { motion } from 'framer-motion'
 import { Folder, ArrowLeft } from 'lucide-react'
 import Link from 'next/link'
-import { NavbarShell } from '@/components/shared/navbar-shell'
-import { Footer } from '@/components/shared/footer'
 import { BookmarkCard } from '@/components/sbm/bookmark-card'
 import { Button } from '@/components/ui/button'
 import { Badge } from '@/components/ui/badge'
@@ -39,7 +37,6 @@ export default function BookmarkCollectionDetailPage() {
   if (!collection) {
     return (
       <div className="min-h-screen bg-background">
-        <NavbarShell />
         <main className="mx-auto max-w-4xl px-4 py-20 sm:px-6 lg:px-8">
           <Card className="border-border bg-card">
             <CardContent className="p-10 text-center">
@@ -51,15 +48,12 @@ export default function BookmarkCollectionDetailPage() {
             </CardContent>
           </Card>
         </main>
-        <Footer />
       </div>
     )
   }
 
   return (
     <div className="min-h-screen bg-background">
-      <NavbarShell />
-
       <main>
         <section className="border-b border-border bg-secondary/30">
           <div className="mx-auto max-w-6xl px-4 py-10 sm:px-6 lg:px-8">
@@ -120,8 +114,6 @@ export default function BookmarkCollectionDetailPage() {
           )}
         </section>
       </main>
-
-      <Footer />
 
       <Dialog open={confirmDelete} onOpenChange={setConfirmDelete}>
         <DialogContent>

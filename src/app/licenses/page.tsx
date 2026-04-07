@@ -11,7 +11,7 @@ export default function LicensesPage() {
   return (
     <PageShell
       title="Licenses"
-      description="Open source licenses and acknowledgements."
+      description="Open-source software used to run the site, gallery, and profile experience."
     >
       <Card className="border-border bg-card">
         <CardContent className="p-6 space-y-3">

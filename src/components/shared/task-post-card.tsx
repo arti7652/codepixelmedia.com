@@ -55,10 +55,10 @@ const getImageUrl = (post: SitePost, content: ListingContent) => {
 
 const cardStyles = {
   'listing-elevated': {
-    frame: 'rounded-[1.9rem] border border-slate-200 bg-white shadow-[0_20px_60px_rgba(15,23,42,0.08)] hover:-translate-y-1 hover:shadow-[0_28px_75px_rgba(15,23,42,0.14)]',
+    frame: 'rounded-[1.9rem] border border-slate-200 bg-white shadow-[0_20px_60px_rgba(15,23,42,0.08)] hover:-translate-y-1 hover:shadow-[0_28px_75px_rgba(15,23,42,0.12)]',
     muted: 'text-slate-600',
     title: 'text-slate-950',
-    badge: 'bg-slate-950 text-white',
+    badge: 'bg-cyan-600 text-white',
   },
   'editorial-feature': {
     frame: 'rounded-[1.8rem] border border-[rgba(125,83,45,0.12)] bg-[#fffaf3] shadow-[0_18px_55px_rgba(89,52,24,0.1)] hover:-translate-y-1 hover:shadow-[0_26px_75px_rgba(89,52,24,0.14)]',
@@ -67,10 +67,10 @@ const cardStyles = {
     badge: 'bg-[#2b1d17] text-[#fff3df]',
   },
   'studio-panel': {
-    frame: 'rounded-[1.9rem] border border-white/10 bg-[linear-gradient(180deg,rgba(7,17,31,0.96),rgba(12,23,43,0.96))] text-white shadow-[0_24px_80px_rgba(15,23,42,0.35)] hover:-translate-y-1 hover:shadow-[0_30px_90px_rgba(15,23,42,0.42)]',
+    frame: 'rounded-[1.9rem] border border-white/10 bg-[linear-gradient(180deg,rgba(15,23,42,0.96),rgba(30,41,59,0.96))] text-white shadow-[0_24px_80px_rgba(15,23,42,0.35)] hover:-translate-y-1 hover:shadow-[0_30px_90px_rgba(15,23,42,0.42)]',
     muted: 'text-slate-300',
     title: 'text-white',
-    badge: 'bg-[#8df0c8] text-[#07111f]',
+    badge: 'bg-cyan-400 text-slate-950',
   },
   'catalog-grid': {
     frame: 'rounded-[1.8rem] border border-[rgba(67,78,41,0.14)] bg-[#f8faf1] shadow-[0_18px_58px_rgba(55,65,31,0.1)] hover:-translate-y-1 hover:shadow-[0_28px_70px_rgba(55,65,31,0.14)]',
