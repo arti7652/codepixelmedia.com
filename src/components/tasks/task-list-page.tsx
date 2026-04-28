@@ -1,244 +1,275 @@
-import Link from 'next/link'
-import { ArrowRight, Building2, FileText, Image as ImageIcon, LayoutGrid, Tag, User } from 'lucide-react'
-import { TaskListClient } from '@/components/tasks/task-list-client'
-import { SchemaJsonLd } from '@/components/seo/schema-jsonld'
-import { fetchTaskPosts } from '@/lib/task-data'
-import { SITE_CONFIG, getTaskConfig, type TaskKey } from '@/lib/site-config'
-import { CATEGORY_OPTIONS, normalizeCategory } from '@/lib/categories'
-import { taskIntroCopy } from '@/config/site.content'
-import { getFactoryState } from '@/design/factory/get-factory-state'
+import Link from "next/link";
+import { ArrowRight, LayoutGrid } from "lucide-react";
+import { NavbarShell } from "@/components/shared/navbar-shell";
+import { TaskListClient } from "@/components/tasks/task-list-client";
+import { SchemaJsonLd } from "@/components/seo/schema-jsonld";
+import { fetchTaskPosts } from "@/lib/task-data";
+import { SITE_CONFIG, getTaskConfig, type TaskKey } from "@/lib/site-config";
+import { CATEGORY_OPTIONS, normalizeCategory } from "@/lib/categories";
+import { taskIntroCopy } from "@/config/site.content";
+import { getSiteExperience } from "@/lib/site-experience";
 
-const taskIcons: Record<TaskKey, any> = {
-  listing: Building2,
-  article: FileText,
-  image: ImageIcon,
-  profile: User,
-  classified: Tag,
-  sbm: LayoutGrid,
-  social: LayoutGrid,
-  pdf: FileText,
-  org: Building2,
-  comment: FileText,
-}
+function renderHero(
+  experience: ReturnType<typeof getSiteExperience>,
+  task: TaskKey,
+  taskLabel: string,
+  description: string,
+  normalizedCategory: string,
+  route: string
+) {
+  const filterForm = (
+    <form action={route} className={`grid gap-3 rounded-[1.75rem] p-5 ${experience.softPanelClass}`}>
+      <label className={`text-xs font-semibold uppercase tracking-[0.24em] ${experience.mutedClass}`}>
+        Category
+      </label>
+      <select
+        name="category"
+        defaultValue={normalizedCategory}
+        className="h-11 rounded-xl border border-border bg-white/80 px-3 text-sm text-foreground"
+      >
+        <option value="all">All categories</option>
+        {CATEGORY_OPTIONS.map((item) => (
+          <option key={item.slug} value={item.slug}>
+            {item.name}
+          </option>
+        ))}
+      </select>
+      <button type="submit" className={`h-11 rounded-xl text-sm font-semibold ${experience.buttonClass}`}>
+        Apply filter
+      </button>
+    </form>
+  );
 
-const variantShells = {
-  'listing-directory': 'bg-[radial-gradient(circle_at_top_left,rgba(6,182,212,0.1),transparent_24%),linear-gradient(180deg,#f8fafc_0%,#ffffff_100%)]',
-  'listing-showcase': 'bg-[linear-gradient(180deg,#ffffff_0%,#f1f5f9_100%)]',
-  'article-editorial': 'bg-[radial-gradient(circle_at_top_left,rgba(34,211,238,0.1),transparent_20%),linear-gradient(180deg,oklch(0.99_0.01_260)_0%,#ffffff_100%)]',
-  'article-journal': 'bg-[linear-gradient(180deg,oklch(0.995_0.006_260)_0%,oklch(0.97_0.015_265)_100%)]',
-  'image-masonry': 'bg-[linear-gradient(180deg,#f8fafc_0%,#ffffff_100%)] text-slate-950',
-  'image-portfolio': 'bg-[linear-gradient(180deg,#f8fafc_0%,#ffffff_100%)] text-slate-950',
-  'profile-creator': 'bg-[linear-gradient(180deg,#0a0f1c_0%,#1e293b_100%)] text-white',
-  'profile-business': 'bg-[linear-gradient(180deg,#f8fafc_0%,#ffffff_100%)]',
-  'classified-bulletin': 'bg-[linear-gradient(180deg,#edf3e4_0%,#ffffff_100%)]',
-  'classified-market': 'bg-[linear-gradient(180deg,#f4f6ef_0%,#ffffff_100%)]',
-  'sbm-curation': 'bg-[linear-gradient(180deg,oklch(0.99_0.012_260)_0%,#ffffff_100%)]',
-  'sbm-library': 'bg-[linear-gradient(180deg,#f7f9fc_0%,#ffffff_100%)]',
-} as const
+  if (experience.key === "tynewebdesign") {
+    return (
+      <section className="mb-12 grid gap-6 lg:grid-cols-[1.15fr_0.85fr]">
+        <div className={`rounded-[2.25rem] p-8 ${experience.panelClass}`}>
+          <p className={`text-xs font-semibold uppercase tracking-[0.3em] ${experience.mutedClass}`}>{experience.heroEyebrow}</p>
+          <h1 className="mt-4 text-4xl font-semibold tracking-[-0.05em] text-foreground sm:text-5xl">{description}</h1>
+          <p className={`mt-5 max-w-2xl text-sm leading-8 ${experience.mutedClass}`}>{experience.heroDescription}</p>
+        </div>
+        {filterForm}
+      </section>
+    );
+  }
 
-export async function TaskListPage({ task, category }: { task: TaskKey; category?: string }) {
-  const taskConfig = getTaskConfig(task)
-  const posts = await fetchTaskPosts(task, 30)
-  const normalizedCategory = category ? normalizeCategory(category) : 'all'
-  const intro = taskIntroCopy[task]
-  const baseUrl = SITE_CONFIG.baseUrl.replace(/\/$/, '')
-  const schemaItems = posts.slice(0, 10).map((post, index) => ({
-    '@type': 'ListItem',
-    position: index + 1,
-    url: `${baseUrl}${taskConfig?.route || '/posts'}/${post.slug}`,
-    name: post.title,
-  }))
-  const { recipe } = getFactoryState()
-  const layoutKey = recipe.taskLayouts[task as keyof typeof recipe.taskLayouts] || `${task}-${task === 'listing' ? 'directory' : 'editorial'}`
-  const shellClass = variantShells[layoutKey as keyof typeof variantShells] || 'bg-background'
-  const Icon = taskIcons[task] || LayoutGrid
+  if (experience.key === "codepixelmedia") {
+    return (
+      <section className="mb-12 grid gap-0 overflow-hidden rounded-[2rem] lg:grid-cols-[1fr_1fr]">
+        <div className={`p-8 ${experience.panelClass}`}>
+          <p className="text-xs font-semibold uppercase tracking-[0.3em] text-cyan-300">{taskLabel}</p>
+          <h1 className="mt-4 text-4xl font-semibold tracking-[-0.05em] text-white">{description}</h1>
+          <p className="mt-5 max-w-xl text-sm leading-8 text-slate-300">{experience.heroDescription}</p>
+        </div>
+        <div className="bg-[#eef3ff] p-8">{filterForm}</div>
+      </section>
+    );
+  }
 
-  const isDark = ['profile-creator'].includes(layoutKey)
-  const ui = isDark
-    ? {
-        muted: 'text-slate-300',
-        panel: 'border border-white/10 bg-white/6',
-        soft: 'border border-white/10 bg-white/5',
-        input: 'border-white/10 bg-white/6 text-white',
-        button: 'bg-white text-slate-950 hover:bg-slate-200',
-      }
-    : layoutKey.startsWith('article') || layoutKey.startsWith('sbm')
-      ? {
-          muted: 'text-muted-foreground',
-          panel: 'border border-border bg-card/90',
-          soft: 'border border-border bg-secondary',
-          input: 'border border-border bg-background text-foreground',
-          button: 'bg-primary text-primary-foreground hover:bg-primary/90',
-        }
-      : {
-          muted: 'text-slate-600',
-          panel: 'border border-slate-200 bg-white',
-          soft: 'border border-slate-200 bg-slate-50',
-          input: 'border border-slate-200 bg-white text-slate-950',
-          button: 'bg-slate-950 text-white hover:bg-slate-800',
-        }
+  if (experience.key === "radianpark") {
+    return (
+      <section className={`mb-12 rounded-[2rem] p-6 ${experience.panelClass}`}>
+        <div className="flex flex-col gap-5 lg:flex-row lg:items-end lg:justify-between">
+          <div>
+            <p className={`text-xs font-semibold uppercase tracking-[0.3em] ${experience.mutedClass}`}>{experience.heroEyebrow}</p>
+            <h1 className="mt-3 text-4xl font-semibold tracking-[-0.05em] text-foreground">{description}</h1>
+          </div>
+          <div className="grid gap-3 sm:grid-cols-3">
+            {["Tasks", "Success", "Level"].map((item, index) => (
+              <div key={item} className="rounded-[1.25rem] border border-zinc-200 bg-zinc-50 px-4 py-3">
+                <p className="text-[11px] font-semibold uppercase tracking-[0.22em] text-zinc-500">{item}</p>
+                <p className="mt-2 text-2xl font-semibold text-zinc-950">{["148", "94%", "Expert"][index]}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  if (experience.key === "lashisking") {
+    return (
+      <section className={`mb-12 rounded-[2.5rem] p-8 ${experience.panelClass}`}>
+        <div className="grid gap-6 lg:grid-cols-[1.1fr_0.9fr] lg:items-center">
+          <div>
+            <p className={`text-xs font-semibold uppercase tracking-[0.3em] ${experience.mutedClass}`}>{experience.heroEyebrow}</p>
+            <h1 className="mt-4 text-5xl font-semibold tracking-[-0.04em] text-rose-950">{description}</h1>
+            <p className={`mt-5 max-w-2xl text-sm leading-8 ${experience.mutedClass}`}>{experience.heroDescription}</p>
+          </div>
+          {filterForm}
+        </div>
+      </section>
+    );
+  }
+
+  if (experience.key === "scoreminers") {
+    return (
+      <section className="mb-12 grid gap-5 lg:grid-cols-[0.95fr_1.05fr]">
+        <div className={`p-6 ${experience.panelClass}`}>
+          <p className="text-xs font-black uppercase tracking-[0.25em] text-slate-950">{experience.heroEyebrow}</p>
+          <h1 className="mt-4 text-4xl font-black uppercase text-slate-950">{description}</h1>
+        </div>
+        <div className="grid gap-4 sm:grid-cols-3">
+          {["142", "96%", "19"].map((item, index) => (
+            <div key={item} className={`p-6 ${experience.softPanelClass}`}>
+              <p className="text-xs font-black uppercase tracking-[0.25em] text-slate-950">{["Total tasks", "Success rate", "Level"][index]}</p>
+              <p className="mt-3 text-4xl font-black text-slate-950">{item}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+    );
+  }
+
+  if (experience.key === "linedesing") {
+    return (
+      <section className={`mb-12 rounded-[2rem] p-6 ${experience.panelClass}`}>
+        <div className="grid gap-6 lg:grid-cols-[220px_1fr_300px]">
+          <div className="border-b border-sky-200 pb-4 lg:border-b-0 lg:border-r lg:pb-0 lg:pr-6">
+            <p className="text-xs font-semibold uppercase tracking-[0.28em] text-sky-700">Mode</p>
+            <p className="mt-3 text-lg font-semibold text-slate-950">Blueprint</p>
+          </div>
+          <div>
+            <p className={`text-xs font-semibold uppercase tracking-[0.3em] ${experience.mutedClass}`}>{experience.heroEyebrow}</p>
+            <h1 className="mt-3 text-4xl font-semibold tracking-[-0.05em] text-slate-950">{description}</h1>
+          </div>
+          {filterForm}
+        </div>
+      </section>
+    );
+  }
+
+  if (experience.key === "helloartcity") {
+    return (
+      <section className="mb-12 grid gap-6 lg:grid-cols-[1.08fr_0.92fr]">
+        <div className={`relative overflow-hidden rounded-[2rem] p-8 ${experience.panelClass}`}>
+          <div className="absolute right-6 top-6 rotate-[8deg] rounded-full bg-emerald-100 px-4 py-1 text-xs font-semibold text-emerald-900">Live wall</div>
+          <p className="text-xs font-semibold uppercase tracking-[0.3em] text-orange-600">{experience.heroEyebrow}</p>
+          <h1 className="mt-4 text-5xl font-bold tracking-[-0.05em] text-stone-950">{description}</h1>
+          <p className="mt-5 max-w-2xl text-sm leading-8 text-stone-700">{experience.heroDescription}</p>
+        </div>
+        {filterForm}
+      </section>
+    );
+  }
+
+  if (experience.key === "housesdecors") {
+    return (
+      <section className={`mb-12 rounded-[2rem] p-8 ${experience.panelClass}`}>
+        <div className="grid gap-6 lg:grid-cols-[1fr_1fr]">
+          <div>
+            <p className={`text-xs font-semibold uppercase tracking-[0.3em] ${experience.mutedClass}`}>{experience.heroEyebrow}</p>
+            <h1 className="mt-4 text-5xl font-semibold tracking-[-0.05em] text-amber-950">{description}</h1>
+          </div>
+          <div className="grid gap-3 sm:grid-cols-2">
+            <div className={`rounded-[1.5rem] p-5 ${experience.softPanelClass}`}>
+              <p className="text-xs font-semibold uppercase tracking-[0.22em] text-amber-900/60">Task style</p>
+              <p className="mt-2 text-xl font-semibold text-amber-950">Material panels</p>
+            </div>
+            {filterForm}
+          </div>
+        </div>
+      </section>
+    );
+  }
+
+  if (experience.key === "aporiakennels") {
+    return (
+      <section className={`mb-12 rounded-[2rem] p-8 ${experience.panelClass}`}>
+        <div className="grid gap-6 lg:grid-cols-[1fr_320px]">
+          <div>
+            <p className={`text-xs font-semibold uppercase tracking-[0.3em] ${experience.mutedClass}`}>{experience.heroEyebrow}</p>
+            <h1 className="mt-4 text-4xl font-semibold tracking-[-0.05em] text-emerald-950">{description}</h1>
+            <div className="mt-6 flex flex-wrap gap-3">
+              {["Champion lines", "Daily field notes", "Image-backed trust"].map((item) => (
+                <span key={item} className="rounded-full bg-emerald-100 px-4 py-2 text-xs font-semibold uppercase tracking-[0.2em] text-emerald-950">
+                  {item}
+                </span>
+              ))}
+            </div>
+          </div>
+          {filterForm}
+        </div>
+      </section>
+    );
+  }
 
   return (
-    <div className={`min-h-screen ${shellClass}`}>
+    <section className={`mb-12 rounded-[2.25rem] p-8 ${experience.panelClass}`}>
+      <div className="grid gap-6 lg:grid-cols-[1.15fr_0.85fr] lg:items-center">
+        <div>
+          <p className={`text-xs font-semibold uppercase tracking-[0.3em] ${experience.mutedClass}`}>{experience.heroEyebrow}</p>
+          <h1 className="mt-4 text-5xl font-semibold tracking-[-0.05em] text-slate-950">{description}</h1>
+          <p className={`mt-5 max-w-2xl text-sm leading-8 ${experience.mutedClass}`}>{experience.heroDescription}</p>
+        </div>
+        {filterForm}
+      </div>
+    </section>
+  );
+}
+
+export async function TaskListPage({ task, category }: { task: TaskKey; category?: string }) {
+  const taskConfig = getTaskConfig(task);
+  const posts = await fetchTaskPosts(task, 30);
+  const normalizedCategory = category ? normalizeCategory(category) : "all";
+  const intro = taskIntroCopy[task];
+  const baseUrl = SITE_CONFIG.baseUrl.replace(/\/$/, "");
+  const experience = getSiteExperience(SITE_CONFIG.baseUrl);
+  const schemaItems = posts.slice(0, 10).map((post, index) => ({
+    "@type": "ListItem",
+    position: index + 1,
+    url: `${baseUrl}${taskConfig?.route || "/posts"}/${post.slug}`,
+    name: post.title,
+  }));
+
+  return (
+    <div className={`min-h-screen ${experience.pageClass} ${experience.fontClass}`}>
+      <NavbarShell />
       <main className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
-        {task === 'listing' ? (
-          <SchemaJsonLd
-            data={[
-              {
-                '@context': 'https://schema.org',
-                '@type': 'ItemList',
-                name: 'Business Directory Listings',
-                itemListElement: schemaItems,
-              },
-              {
-                '@context': 'https://schema.org',
-                '@type': 'LocalBusiness',
-                name: SITE_CONFIG.name,
-                url: `${baseUrl}/listings`,
-                areaServed: 'Worldwide',
-              },
-            ]}
-          />
-        ) : null}
-        {task === 'article' || task === 'classified' ? (
-          <SchemaJsonLd
-            data={{
-              '@context': 'https://schema.org',
-              '@type': 'CollectionPage',
-              name: `${taskConfig?.label || task} | ${SITE_CONFIG.name}`,
-              url: `${baseUrl}${taskConfig?.route || ''}`,
-              hasPart: schemaItems,
-            }}
-          />
-        ) : null}
+        <SchemaJsonLd
+          data={{
+            "@context": "https://schema.org",
+            "@type": "CollectionPage",
+            name: `${taskConfig?.label || task} | ${SITE_CONFIG.name}`,
+            url: `${baseUrl}${taskConfig?.route || ""}`,
+            hasPart: schemaItems,
+          }}
+        />
 
-        {layoutKey === 'listing-directory' || layoutKey === 'listing-showcase' ? (
-          <section className="mb-12 grid gap-6 lg:grid-cols-[1.1fr_0.9fr] lg:items-end">
-            <div className={`rounded-[2rem] p-7 shadow-[0_24px_70px_rgba(15,23,42,0.07)] ${ui.panel}`}>
-              <div className="flex items-center gap-3 text-xs font-semibold uppercase tracking-[0.24em] opacity-70"><Icon className="h-4 w-4" /> {taskConfig?.label || task}</div>
-              <h1 className="mt-4 text-4xl font-semibold tracking-[-0.04em] text-foreground">{taskConfig?.description || 'Latest posts'}</h1>
-              <p className={`mt-4 max-w-2xl text-sm leading-7 ${ui.muted}`}>Built with a cleaner scan rhythm, stronger metadata grouping, and a structure designed for business discovery rather than editorial reading.</p>
-              <div className="mt-6 flex flex-wrap gap-3">
-                <Link href={taskConfig?.route || '#'} className={`inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-semibold ${ui.button}`}>Explore results <ArrowRight className="h-4 w-4" /></Link>
-                <Link href="/search" className={`inline-flex items-center gap-2 rounded-full px-5 py-3 text-sm font-semibold ${ui.soft}`}>Open search</Link>
-              </div>
-            </div>
-            <form className={`grid gap-3 rounded-[2rem] p-6 shadow-[0_18px_50px_rgba(15,23,42,0.06)] ${ui.soft}`} action={taskConfig?.route || '#'}>
-              <div>
-                <label className={`text-xs uppercase tracking-[0.2em] ${ui.muted}`}>Category</label>
-                <select name="category" defaultValue={normalizedCategory} className={`mt-2 h-11 w-full rounded-xl px-3 text-sm ${ui.input}`}>
-                  <option value="all">All categories</option>
-                  {CATEGORY_OPTIONS.map((item) => (
-                    <option key={item.slug} value={item.slug}>{item.name}</option>
-                  ))}
-                </select>
-              </div>
-              <button type="submit" className={`h-11 rounded-xl text-sm font-medium ${ui.button}`}>Apply filters</button>
-            </form>
-          </section>
-        ) : null}
-
-        {layoutKey === 'article-editorial' || layoutKey === 'article-journal' ? (
-          <section className="mb-12 grid gap-8 lg:grid-cols-[1.1fr_0.9fr] lg:items-start">
-            <div>
-              <p className={`text-xs uppercase tracking-[0.3em] ${ui.muted}`}>{taskConfig?.label || task}</p>
-              <h1 className="mt-3 max-w-4xl text-5xl font-semibold tracking-[-0.05em] text-foreground">{taskConfig?.description || 'Latest posts'}</h1>
-              <p className={`mt-5 max-w-2xl text-sm leading-8 ${ui.muted}`}>This reading surface uses slower pacing, stronger typographic hierarchy, and more breathing room so long-form content feels intentional rather than squeezed into a generic feed.</p>
-            </div>
-            <div className={`rounded-[2rem] p-6 ${ui.panel}`}>
-              <p className={`text-xs font-semibold uppercase tracking-[0.24em] ${ui.muted}`}>Reading note</p>
-              <p className={`mt-4 text-sm leading-7 ${ui.muted}`}>Use category filters to jump between topics without collapsing the page into the same repeated card rhythm used by other task types.</p>
-              <form className="mt-5 flex items-center gap-3" action={taskConfig?.route || '#'}>
-                <select name="category" defaultValue={normalizedCategory} className={`h-11 flex-1 rounded-xl px-3 text-sm ${ui.input}`}>
-                  <option value="all">All categories</option>
-                  {CATEGORY_OPTIONS.map((item) => (
-                    <option key={item.slug} value={item.slug}>{item.name}</option>
-                  ))}
-                </select>
-                <button type="submit" className={`h-11 rounded-xl px-4 text-sm font-medium ${ui.button}`}>Apply</button>
-              </form>
-            </div>
-          </section>
-        ) : null}
-
-        {layoutKey === 'image-masonry' || layoutKey === 'image-portfolio' ? (
-          <section className="mb-12 grid gap-6 lg:grid-cols-[0.95fr_1.05fr] lg:items-center">
-            <div>
-              <div className={`inline-flex items-center gap-2 rounded-full px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.22em] ${ui.soft}`}>
-                <Icon className="h-3.5 w-3.5" /> Visual feed
-              </div>
-              <h1 className="mt-5 text-5xl font-semibold tracking-[-0.05em] text-foreground">{taskConfig?.description || 'Latest posts'}</h1>
-              <p className={`mt-5 max-w-2xl text-sm leading-8 ${ui.muted}`}>This surface leans into stronger imagery, larger modules, and more expressive spacing so visual content feels materially different from reading and directory pages.</p>
-            </div>
-            <div className="grid grid-cols-2 gap-4">
-              <div className={`min-h-[220px] rounded-[2rem] ${ui.panel}`} />
-              <div className={`min-h-[220px] rounded-[2rem] ${ui.soft}`} />
-              <div className={`col-span-2 min-h-[120px] rounded-[2rem] ${ui.panel}`} />
-            </div>
-          </section>
-        ) : null}
-
-        {layoutKey === 'profile-creator' || layoutKey === 'profile-business' ? (
-          <section className={`mb-12 rounded-[2.2rem] p-8 shadow-[0_24px_70px_rgba(15,23,42,0.1)] ${ui.panel}`}>
-            <div className="grid gap-6 lg:grid-cols-[0.8fr_1.2fr] lg:items-center">
-              <div className={`min-h-[240px] rounded-[2rem] ${ui.soft}`} />
-              <div>
-                <p className={`text-xs uppercase tracking-[0.3em] ${ui.muted}`}>{taskConfig?.label || task}</p>
-                <h1 className="mt-3 text-4xl font-semibold tracking-[-0.05em] text-foreground">Profiles with stronger identity, trust, and reputation cues.</h1>
-                <p className={`mt-5 max-w-2xl text-sm leading-8 ${ui.muted}`}>This layout prioritizes the person or business surface first, then lets the feed continue below without borrowing the same visual logic used by articles or listings.</p>
-              </div>
-            </div>
-          </section>
-        ) : null}
-
-        {layoutKey === 'classified-bulletin' || layoutKey === 'classified-market' ? (
-          <section className="mb-12 grid gap-4 lg:grid-cols-[0.9fr_1.1fr] lg:items-start">
-            <div className={`rounded-[1.8rem] p-6 ${ui.panel}`}>
-              <p className={`text-xs uppercase tracking-[0.3em] ${ui.muted}`}>{taskConfig?.label || task}</p>
-              <h1 className="mt-3 text-4xl font-semibold tracking-[-0.05em] text-foreground">Fast-moving notices, offers, and responses in a compact board format.</h1>
-            </div>
-            <div className="grid gap-3 sm:grid-cols-2 xl:grid-cols-3">
-              {['Quick to scan', 'Shorter response path', 'Clearer urgency cues'].map((item) => (
-                <div key={item} className={`rounded-[1.5rem] p-5 ${ui.soft}`}>
-                  <p className="text-sm font-semibold">{item}</p>
-                </div>
-              ))}
-            </div>
-          </section>
-        ) : null}
-
-        {layoutKey === 'sbm-curation' || layoutKey === 'sbm-library' ? (
-          <section className="mb-12 grid gap-6 lg:grid-cols-[1.15fr_0.85fr] lg:items-start">
-            <div>
-              <p className={`text-xs uppercase tracking-[0.3em] ${ui.muted}`}>{taskConfig?.label || task}</p>
-              <h1 className="mt-3 text-4xl font-semibold tracking-[-0.05em] text-foreground">Curated resources arranged more like collections than a generic post feed.</h1>
-              <p className={`mt-5 max-w-2xl text-sm leading-8 ${ui.muted}`}>Bookmarks, saved resources, and reference-style items need calmer grouping and lighter metadata. This variant gives them that separation.</p>
-            </div>
-            <div className={`rounded-[2rem] p-6 ${ui.panel}`}>
-              <p className={`text-xs uppercase tracking-[0.24em] ${ui.muted}`}>Collection filter</p>
-              <form className="mt-4 flex items-center gap-3" action={taskConfig?.route || '#'}>
-                <select name="category" defaultValue={normalizedCategory} className={`h-11 flex-1 rounded-xl px-3 text-sm ${ui.input}`}>
-                  <option value="all">All categories</option>
-                  {CATEGORY_OPTIONS.map((item) => (
-                    <option key={item.slug} value={item.slug}>{item.name}</option>
-                  ))}
-                </select>
-                <button type="submit" className={`h-11 rounded-xl px-4 text-sm font-medium ${ui.button}`}>Apply</button>
-              </form>
-            </div>
-          </section>
-        ) : null}
+        {renderHero(
+          experience,
+          task,
+          taskConfig?.label || task,
+          taskConfig?.description || "Latest posts",
+          normalizedCategory,
+          taskConfig?.route || "#"
+        )}
 
         {intro ? (
-          <section className={`mb-12 rounded-[2rem] p-6 shadow-[0_18px_50px_rgba(15,23,42,0.06)] sm:p-8 ${ui.panel}`}>
-            <h2 className="text-2xl font-semibold text-foreground">{intro.title}</h2>
-            {intro.paragraphs.map((paragraph) => (
-              <p key={paragraph.slice(0, 40)} className={`mt-4 text-sm leading-7 ${ui.muted}`}>{paragraph}</p>
-            ))}
-            <div className="mt-4 flex flex-wrap gap-4 text-sm">
-              {intro.links.map((link) => (
-                <a key={link.href} href={link.href} className="font-semibold text-foreground hover:underline">{link.label}</a>
-              ))}
+          <section className={`mb-10 rounded-[2rem] p-6 ${experience.panelClass}`}>
+            <div className="flex flex-col gap-6 lg:flex-row lg:items-start lg:justify-between">
+              <div>
+                <p className={`text-xs font-semibold uppercase tracking-[0.25em] ${experience.mutedClass}`}>{intro.title}</p>
+                {intro.paragraphs.slice(0, 2).map((paragraph) => (
+                  <p key={paragraph.slice(0, 30)} className={`mt-4 max-w-3xl text-sm leading-8 ${experience.mutedClass}`}>
+                    {paragraph}
+                  </p>
+                ))}
+              </div>
+              <div className={`rounded-[1.5rem] p-5 ${experience.softPanelClass}`}>
+                <div className="flex items-center gap-2 text-sm font-semibold text-foreground">
+                  <LayoutGrid className="h-4 w-4" />
+                  Surface notes
+                </div>
+                <div className="mt-4 flex flex-col gap-3 text-sm">
+                  <Link href={taskConfig?.route || "#"} className={`inline-flex items-center gap-2 ${experience.mutedClass}`}>
+                    Open current collection <ArrowRight className="h-4 w-4" />
+                  </Link>
+                  <Link href="/search" className={`inline-flex items-center gap-2 ${experience.mutedClass}`}>
+                    Search across tasks <ArrowRight className="h-4 w-4" />
+                  </Link>
+                </div>
+              </div>
             </div>
           </section>
         ) : null}
@@ -246,5 +277,6 @@ export async function TaskListPage({ task, category }: { task: TaskKey; category
         <TaskListClient task={task} initialPosts={posts} category={normalizedCategory} />
       </main>
     </div>
-  )
+  );
 }
+

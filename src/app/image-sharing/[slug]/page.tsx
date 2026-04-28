@@ -1,4 +1,4 @@
-import { TaskDetailPage } from "@/components/tasks/task-detail-page";
+import { ImageDetailPage } from "@/components/image-sharing/image-detail-page";
 import { buildPostMetadata, buildTaskMetadata } from "@/lib/seo";
 import { fetchTaskPostBySlug, fetchTaskPosts } from "@/lib/task-data";
 
@@ -18,7 +18,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   return post ? await buildPostMetadata("image", post) : await buildTaskMetadata("image");
 }
 
-export default async function ImageDetailPage({ params }: { params: Promise<{ slug: string }> }) {
+export default async function ImageDetailPageRoute({ params }: { params: Promise<{ slug: string }> }) {
   const resolvedParams = await params;
-  return <TaskDetailPage task="image" slug={resolvedParams.slug} />;
+  return <ImageDetailPage task="image" slug={resolvedParams.slug} />;
 }
